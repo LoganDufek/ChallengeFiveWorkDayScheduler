@@ -69,3 +69,13 @@ textarea{
   font-size: 20px;
   transition: all .3s ease-in-out;
 }
+
+button {
+  border-style: none;
+  text-decoration: none;
+}
+
+button svg {
+  padding-right: 0px;
+  padding-bottom: 15px;
+}
