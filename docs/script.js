@@ -1,7 +1,7 @@
 
 //Get the ID of the p element in the header and apply Moment to it to get the current date
 var currentDay = document.getElementById("currentDay");
-var scheduleEl = document.querySelectorAll("description");
+
 //Get the class list of the individual textareas 
 var nineText = document.querySelector(".nine-am");
 var tenText = document.querySelector(".ten-am");
@@ -12,30 +12,24 @@ var twoText = document.querySelector(".two-pm");
 var threeText = document.querySelector(".three-pm");
 var fourText = document.querySelector(".four-pm");
 var fiveText = document.querySelector(".five-pm");
+var saveButton = document.getElementsByClassName(".saveBtn")
+
+
+if (localStorage.getItem("Tasks") === null){
+    console.log("No Saved Notes")
+}
+else {
+loadNotes();  
+}
+
+
+  
 
 var currentMoment = moment().format('dddd, MMMM Do YYYY');
 currentDay.innerHTML = currentMoment;
 
 
 function checkTime() {
-//     hour = 9;
-//     for (i = 0; i < 8; i++) {
-
-//         var currentHour = moment().set("hour", 9);
-
-//         if (moment().isAfter(currentHour)) {
-//             nineText.classList.add("past");
-//         }
-//         else if (moment().isSame(currentHour)) {
-//             nineText.classList.add("present");
-//             nineText.classList.remove("past");
-//         }
-//         else if (moment().isBefore(currentHour)) {
-//             nineText.classList.add("future");
-//         }
-//         hour++
-//     }
-// };
 
 
     var nine = moment().set("hour", 9);
@@ -161,5 +155,45 @@ setInterval(function () {
     checkTime();
     console.log("Hi")
   }, (1000 * 60) * 2);
+
+function saveNotes() {
+
+    var notes = [];
+    
+    $('textarea').each(function () {
+        notes.push(this.value);
+    });
+
+ 
+    console.log(notes);
+
+   localStorage.setItem("Tasks", JSON.stringify(notes))
+    
+}
+
+
+function loadNotes() {
+
+    var notes = [] 
+ 
+    notes = JSON.parse(localStorage.getItem("Tasks"));
+
+    nineText.textContent = notes[0];
+    tenText.textContent = notes[1];
+    elevenText.textContent = notes[2];
+    twelveText.textContent =  notes[3];
+    oneText.textContent =  notes[4];
+    twoText.textContent = notes[5];
+    threeText.textContent = notes[6];
+    fourText.textContent = notes[7];
+    fiveText.textContent = notes[8];
+ };
+
+document.querySelectorAll('.saveBtn').forEach(item => {
+    item.addEventListener('click', event => {
+        saveNotes();
+    })
+  })
+
 
 checkTime();
