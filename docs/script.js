@@ -2,7 +2,7 @@
 //Get the ID of the p element in the header and apply Moment to it to get the current date
 var currentDay = document.getElementById("currentDay");
 
-//Get the class list of the individual textareas 
+//Variables to get the class list of the individual textareas 
 var nineText = document.querySelector(".nine-am");
 var tenText = document.querySelector(".ten-am");
 var elevenText = document.querySelector(".eleven-am");
@@ -15,7 +15,8 @@ var fiveText = document.querySelector(".five-pm");
 var saveButton = document.getElementsByClassName(".saveBtn")
 
 
-if (localStorage.getItem("Tasks") === null){
+//When the page loads, this if statement checks to see if the local storage for Notes, if it's empty, it console logs that, otherwise it runs loadNotes
+if (localStorage.getItem("Notes") === null){
     console.log("No Saved Notes")
 }
 else {
@@ -23,12 +24,13 @@ loadNotes();
 }
 
 
-  
 
+//Variable that utilizes Moment.js to display the current day of the week and date  
 var currentMoment = moment().format('dddd, MMMM Do YYYY');
 currentDay.innerHTML = currentMoment;
 
 
+//Function that useses Moment.js to check the individual time slots against the computer's clock and applys the relevant CSS class styling
 function checkTime() {
 
 
@@ -151,10 +153,13 @@ function checkTime() {
 
 };
 
+//Function checkTime set to run every half an hour in order to check the time and reapply the relevant CSS classes when they change
 setInterval(function () {
     checkTime();
-    console.log("Hi")
-  }, (1000 * 60) * 2);
+    
+  }, (1000 * 60) * 30);
+
+
 
 function saveNotes() {
 
@@ -167,16 +172,16 @@ function saveNotes() {
  
     console.log(notes);
 
-   localStorage.setItem("Tasks", JSON.stringify(notes))
+   localStorage.setItem("Notes", JSON.stringify(notes))
     
 }
 
-
+//Function which takes the data in localStorage, applys it to an array, and then each index of that array is set to the corresponding text content of the textareas, thus saving the notes in the same place
 function loadNotes() {
 
     var notes = [] 
  
-    notes = JSON.parse(localStorage.getItem("Tasks"));
+    notes = JSON.parse(localStorage.getItem("Notes"));
 
     nineText.textContent = notes[0];
     tenText.textContent = notes[1];
@@ -189,6 +194,8 @@ function loadNotes() {
     fiveText.textContent = notes[8];
  };
 
+
+//Event listener added to each Save Button, triggering saveNotes function upon button click
 document.querySelectorAll('.saveBtn').forEach(item => {
     item.addEventListener('click', event => {
         saveNotes();
