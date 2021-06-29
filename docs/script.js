@@ -2,6 +2,7 @@
 //Get the ID of the p element in the header and apply Moment to it to get the current date
 var currentDay = document.getElementById("currentDay");
 
+
 //Variables to get the class list of the individual textareas 
 var nineText = document.querySelector(".nine-am");
 var tenText = document.querySelector(".ten-am");
